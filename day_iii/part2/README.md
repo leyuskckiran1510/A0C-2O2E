@@ -34,8 +34,5 @@ Of course, the actual engine schematic is much larger. What is the sum of all of
 
 To begin, get your puzzle input.
 
-Answer: 527446
-528673 <-tohigh, assuming "\n" as symbol
-527446 <-middle, doing mathematical shift, answer = answer * 10+new_val
-524521 <-tolow, just doing string concatination and converting to int in final
- 
+Answer: 73201705
+
