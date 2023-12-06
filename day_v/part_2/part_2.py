@@ -35,8 +35,9 @@ def main():
             else:
                 new = list(map(int, data.split(" ")))
                 maps[des] = maps.get(des, []) + [new]
-
-    print(seeds, maps)
+    all_locs = []
+    for location in maps["location"]:
+        all_locs.append(location)
 
 
 if __name__ == "__main__":

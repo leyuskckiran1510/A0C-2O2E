@@ -1,4 +1,7 @@
 from sys import argv
+from functools import partial
+from multiprocessing import Pool
+from queue import Queue
 
 """
 NOTE:-
@@ -45,6 +48,26 @@ def unmap(lis: list[MagicDic], value: int):
     return value
 
 
+def do_work(seed, maps):
+    lowest = float("INF")
+    _lseed = 0
+    for k in range(seed[0], seed[0] + seed[1]):
+        soil = unmap(maps["seed"][1], k)
+        ferti = unmap(maps["soil"][1], soil)
+        water = unmap(maps["fertilizer"][1], ferti)
+        light = unmap(maps["water"][1], water)
+        tmptr = unmap(maps["light"][1], light)
+        hmdty = unmap(maps["temperature"][1], tmptr)
+        loctn = unmap(maps["humidity"][1], hmdty)
+        # print(
+        #     f"Seed {seed}, soil {soil}, fertilizer {ferti}, water {water},light {light}, temperature {tmptr}, humidity {hmdty}, location {loctn}."
+        # )
+        if loctn < lowest:
+            _lseed = k
+            lowest = loctn
+    return (lowest, _lseed)
+
+
 def main():
     seeds = []
     maps = {}
@@ -65,20 +88,12 @@ def main():
                 d_des, d_src, d_rng = list(map(int, data.split(" ")))
                 maps[src][1].append(MagicDic(d_src, d_des, d_rng))
     lowest = float("INF")
-    for seed in seeds:
-        for k in range(seed[0], seed[0] + seed[1]):
-            soil = unmap(maps["seed"][1], k)
-            ferti = unmap(maps["soil"][1], soil)
-            water = unmap(maps["fertilizer"][1], ferti)
-            light = unmap(maps["water"][1], water)
-            tmptr = unmap(maps["light"][1], light)
-            hmdty = unmap(maps["temperature"][1], tmptr)
-            loctn = unmap(maps["humidity"][1], hmdty)
-            # print(
-            #     f"Seed {seed}, soil {soil}, fertilizer {ferti}, water {water},light {light}, temperature {tmptr}, humidity {hmdty}, location {loctn}."
-            # )
-            if loctn < lowest:
-                lowest = loctn
+    with Pool(20) as pl:
+        # for seed in seeds:
+        for i in pl.imap_unordered(partial(do_work, maps=maps), seeds):
+            if i[0] < lowest:
+                lowest = i[0]
+
     print(lowest)
 
 
