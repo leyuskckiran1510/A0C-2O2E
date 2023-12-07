@@ -57,4 +57,5 @@ Find the rank of every hand in your set. What are the total winnings?
 To begin, get your puzzle input.
          
 Answer:  254359456 -> tohigh [normal  ]
-         246641044 -> tolow  [reversed]
+         251287184 -> right  [verysmall mistake in length count]
+	 246641044 -> tolow  [reversed]
