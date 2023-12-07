@@ -23,12 +23,14 @@ class Card:
         self.hand = hand
         self.bid = bid
         self.worth = self.calc_worth()
+        self.dic = Counter(self.hand)
 
     def calc_worth(self):
         counts = Counter(self.hand)
         length = len(counts)
         _worth = 0
-        if length == 5:
+        # this one line and miss readig caued the mess
+        if length == 1:
             _worth += 100
         elif length == 2:
             _worth += 80
@@ -73,7 +75,13 @@ class Card:
         return self.__repr__()
 
     def __repr__(self) -> str:
-        return f"{self.hand}"
+        return f"{self.hand} {self.bid} |=> {self.worth} , |=> {self.dic}"
+
+
+def stroe_sorted(lis):
+    with open(f"{argv[1]}_sorted", "w") as fp:
+        for m in lis:
+            fp.write(str(m) + "\n")
 
 
 def main():
@@ -84,7 +92,9 @@ def main():
             bid: int = int(i.strip().split(" ")[-1])
             hand: str = i.split(" ")[0]
             unordered.append(Card(hand=hand, bid=bid))
-    ordered = reversed(sorted(unordered))
+
+    ordered = sorted(unordered)
+    stroe_sorted(ordered)
     print(sum(map(lambda x: (x[0] + 1) * x[1].bid, enumerate(ordered))))
 
 
