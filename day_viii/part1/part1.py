@@ -23,7 +23,7 @@ def main():
             dicto[key] = value
             if not first:
                 first = key
-    ans = first
+    ans = "AAA"
     count = 0
     rLen = len(runs)
     for i in cycle(runs):

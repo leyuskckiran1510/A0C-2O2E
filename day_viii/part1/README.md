@@ -35,4 +35,4 @@ Starting at AAA, follow the left/right instructions. How many steps are required
 
 To begin, get your puzzle input.
 
-Answer: 
+Answer: 15517
