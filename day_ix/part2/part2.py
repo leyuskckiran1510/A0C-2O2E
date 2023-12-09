@@ -1,45 +1,50 @@
 from sys import argv
 
 """
-10  13  16  21  30  45 x
-  3   3   5   9  15  y
-    0   2   4   6  z
-      2   2   2  a
+x  10  13  16  21  30  45
+  m   3   3   5   9  15
+    n   0   2   4   6
+      o   2   2   2
         0   0   0
 
+2-o  = 0
+0-n  = o
+3-m  = n
+10-x = m
 
-a-2  = 0
-z-6  = a
-y-15 = z
-x-45 = y
-
-x = 45 + y
-    45 + (15 + z)
-    45 + (15 + (6 + a))
-    45 + (15 + (6 + (2 + 0)))
+x = 10 - m
+    10 - (3 - n)
+    10 - (3 - (0 - o))
+    10 - (3 - (0 - (2 - 0)))
 
 so,
 my_array = [10,3,0,2,0] # each first items of each step
 
-ans = my_array[0] + (my_array[1] + (my_array[2] + (my_array[3] + (my_array[4] + ( ... my_array[n])))))
-    = my_array[0] +  my_array[1] +  my_array[2] +  my_array[3] +  my_array[4] +   ... my_array[n])))))
+ans = my_array[0] - (my_array[1] - (my_array[2] - (my_array[3] - (my_array[4] - ... my_array[n])))))
 
 """
 
 
+def do_sub(lis):
+    if not lis:
+        return 0
+    return lis[0] - do_sub(lis[1:])
+
+
 def compute_next(line: str) -> int:
-    last_value = []
+    first_values = []
     items = list(map(int, line.strip().split(" ")))
+    tabs = " "
     while True:
-        last_value.append(items[-1])
+        first_values.append(items[0])
         _new = []
         for n, _ in enumerate(items[:-1]):
             _new.append(items[n + 1] - items[n])
         items = _new.copy()
+        tabs += tabs
         if all([not i for i in items]):
             break
-
-    return sum(last_value)
+    return do_sub(first_values)
 
 
 def main():
