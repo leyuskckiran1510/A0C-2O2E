@@ -99,3 +99,4 @@ Find the single giant loop starting at S. How many steps along the loop does it 
 To begin, get your puzzle input.
 
 Answer: 6839 <-to high
+        6838 <- Correct [forgot to make the starting node depth =0]

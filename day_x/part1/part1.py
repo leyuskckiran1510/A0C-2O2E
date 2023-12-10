@@ -1,7 +1,5 @@
-import collections
 from sys import argv
 from time import sleep
-import time
 
 """
 | is a vertical pipe connecting north and south.
@@ -36,7 +34,7 @@ class Node:
         self.ix = ix
         self.iy = iy
         self.parent = None
-        self.depth = 1
+        self.depth = 0
         self.visited = False
         self.childs: list[Node] = []
         self.dirct = self.calc_direct()
@@ -77,8 +75,7 @@ class Node:
         return _cont
 
     def __repr__(self) -> str:
-        # return f"{pipes.get(self.value,self.value)}"
-        return f"{self.value}{self.childs}"
+        return f"{self.value}"
 
 
 directions = [
@@ -92,15 +89,13 @@ directions = [
 def make_path(matrix: list[list[Node]], root_node: Node):
     queue = [root_node]
     max_depth = 0
-    collection = [root_node]
 
     while queue:
         cur_node = queue.pop(0)
         if cur_node.visited:
             continue
-        # time.sleep(0.1)
+        # sleep(0.1)
         # display_matrix(matrix=matrix)
-        collection.append(cur_node)
         for dx, dy in directions:
             x = cur_node.ix + dx
             y = cur_node.iy + dy
@@ -113,7 +108,6 @@ def make_path(matrix: list[list[Node]], root_node: Node):
                 and matrix[y][x].connects(cur_node)
                 and matrix[y][x].visited == False
                 and matrix[y][x].parent == None
-                and matrix[y][x] not in collection
             ):
                 cur_node.visited = True
                 matrix[y][x].parent = cur_node
@@ -123,7 +117,6 @@ def make_path(matrix: list[list[Node]], root_node: Node):
                     max_depth = matrix[y][x].depth
                 cur_node.childs.append(matrix[y][x])
         queue.extend(cur_node.childs)
-    print(max_depth)
     return max_depth
 
 
@@ -155,9 +148,8 @@ def main():
             matrix.append(_temp)
     if root_node:
         ans = make_path(matrix, root_node)
-    # display_matrix(matrix)
-    print(root_node)
-    print(ans - 1)
+    display_matrix(matrix)
+    print(ans)
 
 
 if __name__ == "__main__":
