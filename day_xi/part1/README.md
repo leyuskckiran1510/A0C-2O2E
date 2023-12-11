@@ -94,4 +94,4 @@ Expand the universe, then find the length of the shortest path between every pai
 
 To begin, get your puzzle input.
 
-Answer: 
+Answer: 9543156
