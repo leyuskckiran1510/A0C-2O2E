@@ -1,3 +1,4 @@
+from sre_constants import CATEGORY_UNI_LINEBREAK
 from sys import argv
 from math import ceil
 
@@ -30,8 +31,8 @@ def transform(block: list[str]) -> list[str]:
 
 
 def row_palindrom(block: list[str]) -> tuple[int, bool]:
-    block = transform(block.copy())
-    return col_palindrom(block=block)
+    _block = transform(block.copy())
+    return col_palindrom(block=_block)
 
 
 def main():
@@ -47,18 +48,21 @@ def main():
                 _temp.append(i.strip())
         if _temp:
             contents.append(_temp)
-
+    not_founds = 0
     for block in contents:
         col, found = col_palindrom(block)
-        print(col, found)
         if found:
             ans += col
         else:
             row, found = row_palindrom(block)
             if found:
                 ans += 100 * row
-
-    print(ans, contents)
+            else:
+                not_founds += 1
+                # print("\n".join(block))
+                # print("Colud not find mirri in this")
+                # input()
+    print(f"The Answer IS {ans}", f"This many blocks were not computed {not_founds}")
 
 
 if __name__ == "__main__":
