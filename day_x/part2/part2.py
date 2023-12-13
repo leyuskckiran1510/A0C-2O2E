@@ -112,8 +112,8 @@ def make_path(matrix: list[list[Node]], root_node: Node):
                     max_depth = matrix[y][x].depth
                 if dx | dy:
                     cur_node.childs.append(matrix[y][x])
-        # sleep(0.1)
-        # display_matrix(matrix=matrix)
+        sleep(0.1)
+        display_matrix(matrix=matrix)
         queue.extend(cur_node.childs)
     return max_depth
 
